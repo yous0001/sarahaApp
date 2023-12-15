@@ -55,6 +55,26 @@ export const markmessage=async(req,res,next)=>{
         })
     }
     return res.status(200).json({
-        message:"update success"
+        message:"update success",
+        updatedmessage
     })
 }
+
+
+
+export const listUserMessages=async(req,res,next)=>{
+    const{loggedinUserID,isviewed}=req.query 
+
+    const messages=await Messages.find({sendTo:loggedinUserID,isviewed}).sort({createdAt:-1})
+    if(!messages){
+        return res.status(200).json({
+            message:"no messages"
+            
+        })
+    }
+    return res.status(200).json({
+        message:"your messages"
+        ,messages
+    })
+
+} 
