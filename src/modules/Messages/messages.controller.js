@@ -41,3 +41,20 @@ export const deletemesssage=async (req,res,next)=>{
     })
 }
 
+export const markmessage=async(req,res,next)=>{
+    const{loggedinUserID,messageID}=req.query
+
+    const updatedmessage = await Messages.findOneAndUpdate(
+        {_id:messageID,sendTo:loggedinUserID,isviewed:false},
+        {isviewed:true , $inc:{__v:1}},
+        {new:true}
+    )
+    if(!updatedmessage){
+        return res.status(400).json({
+            message:"update failed"
+        })
+    }
+    return res.status(200).json({
+        message:"update success"
+    })
+}
