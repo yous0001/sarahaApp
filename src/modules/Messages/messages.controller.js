@@ -17,11 +17,11 @@ export const sendMessage = async (req,res,next)=>{
     
     const createdMessage = await Messages.create({content,sendTo})
     if(!createdMessage){
-        return res.state(400).json({
+        return res.status(400).json({
             message:"creation failed"
         })
     }
-    return res.state(201).json({
+    return res.status(201).json({
         message:"create success"
     })
 }
@@ -65,7 +65,7 @@ export const markmessage=async(req,res,next)=>{
 export const listUserMessages=async(req,res,next)=>{
     const{loggedinUserID,isviewed}=req.query 
 
-    const messages=await Messages.find({sendTo:loggedinUserID,isviewed}).sort({createdAt:-1})
+    const messages=await Messages.find({sendTo:loggedinUserID,isviewed}).sort({createdAt:-1})//sort messages desending
     if(!messages){
         return res.status(200).json({
             message:"no messages"
@@ -78,3 +78,4 @@ export const listUserMessages=async(req,res,next)=>{
     })
 
 } 
+
